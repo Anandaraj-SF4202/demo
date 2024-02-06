@@ -13,6 +13,11 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v2
       
+    - name: Create Branch in Private Repository
+      run: |
+        git checkout -b development
+        git push origin development
+        
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v3
       with:
@@ -21,4 +26,4 @@ jobs:
         title: 'Merge changes from public repository'
         body: 'Automatically generated pull request from public repository to private repository.'
         labels: 'automated'
-        base: main   # Branch where you want to merge the changes (could be main or any other branch)
+        base: development   # Use the newly created development branch as the base
