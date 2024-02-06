@@ -12,6 +12,9 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
+        # Add the Debug Secret Value step here
+      - name: Debug Secret Value
+        run: echo "Secret value: ${{ secrets.PAT_DEMO }}"
 
       - name: Set up Node.js
         uses: actions/setup-node@v2
