@@ -23,7 +23,7 @@ jobs:
       
       - name: Push Changes to Private Repository
         run: |
-          git remote add private_repo https://github.com/Anandaraj-SF4202/demo1.git
+          git remote add private_repo https://username:token@github.com/Anandaraj-SF4202/demo1.git
           git checkout -b sync-branch
           git push private_repo sync-branch:main
 
