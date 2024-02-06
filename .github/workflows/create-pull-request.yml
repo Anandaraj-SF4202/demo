@@ -22,8 +22,8 @@ jobs:
       with:
         title: 'Merge changes from public repository'
         commit-message: 'Merge changes from public repository'
-        branch: 'main'
-        base: 'main'
+        branch: 'feature-branch' # Use a different branch name here
+        base: 'main' # Specify the base branch where the changes should be merged
         body: 'Automated pull request created by GitHub Actions.'
         labels: 'auto-generated'
         token: ${{ secrets.GIT_TOKEN_DEMO }}
