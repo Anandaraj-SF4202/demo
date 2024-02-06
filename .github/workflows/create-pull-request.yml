@@ -32,5 +32,5 @@ jobs:
           branch: 'pr-branch-${GITHUB_SHA}'
           body: 'Automated pull request created by GitHub Actions.'
           labels: 'auto-generated'
-          token: ${{ secrets.GIT_TOKEN_DEMO1 }}
+          token: ${{ secrets.PAT_DEMO }}   # Use the PAT secret here
           delete-branch: true
