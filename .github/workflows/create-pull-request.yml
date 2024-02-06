@@ -12,10 +12,8 @@ jobs:
     steps:
     - name: Checkout Code
       uses: actions/checkout@v2
-
-    - name: Get Last Commit SHA
-      id: commit
-      run: echo "::set-output name=sha::$(git rev-parse HEAD)"
+      with:
+        token: ${{ secrets.GITHUB_TOKEN_DEMO }}
 
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v3
@@ -26,5 +24,5 @@ jobs:
         base: 'main' # Specify the base branch where the changes should be merged
         body: 'Automated pull request created by GitHub Actions.'
         labels: 'auto-generated'
-        token: ${{ secrets.GIT_TOKEN_DEMO }}
+        token: ${{ secrets.GITHUB_TOKEN_DEMO }}
         delete-branch: true
