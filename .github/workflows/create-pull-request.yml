@@ -6,34 +6,14 @@ on:
       - main
 
 jobs:
-  sync:
+  dispatch:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Public Repository
-        uses: actions/checkout@v2
-        with:
-          repository: Anandaraj-SF4202/demo
-          ref: main
-
-      - name: Configure Git
-        run: |
-          git config --global user.email "anandaraj.sf4202@gmail.com"
-          git config --global user.name "Anandaraj-SF4202"
-      
-      - name: Push Changes to Private Repository
-        run: |
-          git remote add private_repo https://github.com/Anandaraj-SF4202/demo1.git
-          git checkout -b sync-branch
-          git push private_repo sync-branch:main
-
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v3
+      - name: Dispatch Sync Event
+        uses: peter-evans/repository-dispatch@v1
         with:
           token: ${{ secrets.PRIVATE_REPO_PAT }}
           repository: Anandaraj-SF4202/demo1
-          branch: sync-branch
-          title: 'Merge changes from public repository'
-          body: 'Automatically generated pull request from public repository to private repository.'
-          labels: 'automated'
-          base: main
+          event-type: sync-changes
+          client-payload: '{"source_repo": "Anandaraj-SF4202/demo"}'
