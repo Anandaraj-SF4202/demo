@@ -2,31 +2,35 @@ name: Create Pull Request to Private Repository
 
 on:
   push:
-    paths:
-      - 'data1.md'
+    branches:
+      - main
 
 jobs:
   create_pull_request:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v2
+      - name: Checkout Code
+        uses: actions/checkout@v2
 
-    - name: Get Last Commit SHA
-      id: commit
-      run: echo "::set-output name=sha::$(git rev-parse HEAD)"
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
 
-    - name: Create Pull Request
-      uses: peter-evans/create-pull-request@v3
-      with:
-        title: 'Merge changes from public repository'
-        commit-message: 'Merge changes from public repository'
-        branch: 'main'
-        base: 'main'
-        body: 'Automated pull request created by GitHub Actions.'
-        labels: 'auto-generated'
-        token: ${{ secrets.GIT_TOKEN_DEMO1 }}
-        files: |
-          data1.md
-        delete-branch: true
+      - name: Create PR Branch
+        run: |
+          git checkout -b pr-branch-${GITHUB_SHA}
+          git push origin pr-branch-${GITHUB_SHA}
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          title: 'Merge changes from public repository'
+          commit-message: 'Merge changes from public repository'
+          base: 'main'
+          branch: 'pr-branch-${GITHUB_SHA}'
+          body: 'Automated pull request created by GitHub Actions.'
+          labels: 'auto-generated'
+          token: ${{ secrets.GIT_TOKEN_DEMO1 }}
+          delete-branch: true
