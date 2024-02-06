@@ -2,8 +2,8 @@ name: Create Pull Request to Private Repository
 
 on:
   push:
-    paths:
-      - 'data1.md'
+    branches:
+      - main
 
 jobs:
   create_pull_request:
@@ -26,7 +26,5 @@ jobs:
         base: 'main'
         body: 'Automated pull request created by GitHub Actions.'
         labels: 'auto-generated'
-        token: ${{ secrets.GIT_TOKEN_DEMO1 }}
-        files: |
-          data1.md
+        token: ${{ secrets.GIT_TOKEN_DEMO }}
         delete-branch: true
