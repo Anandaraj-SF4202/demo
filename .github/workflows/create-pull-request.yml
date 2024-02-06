@@ -10,16 +10,16 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v2
+      - name: Checkout Repository
+        uses: actions/checkout@v2
       
-    - name: Create Pull Request
-      uses: peter-evans/create-pull-request@v3
-      with:
-        token: ${{ secrets.PRIVATE_REPO_PAT }}  # Use PAT with access to demo1 repository
-        repository: https://github.com/Anandaraj-SF4202/demo1      # Specify the private repository
-        branch: development                      # Branch where the changes are coming from
-        title: 'Merge changes from public repository'
-        body: 'Automatically generated pull request from public repository to private repository.'
-        labels: 'automated'
-        base: main                                # Branch where you want to merge the changes (could be main or any other branch)
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          token: ${{ secrets.PRIVATE_REPO_PAT }}
+          repository: https://github.com/Anandaraj-SF4202/demo1  # Full URL of the private repository
+          branch: main  # Branch where the changes are coming from
+          title: 'Merge changes from public repository'
+          body: 'Automatically generated pull request from public repository to private repository.'
+          labels: 'automated'
+          base: main
