@@ -1,4 +1,4 @@
-name: Create Pull Request to Private Repository
+name: Create PR to Private Repository
 
 on:
   push:
@@ -6,33 +6,20 @@ on:
       - main
 
 jobs:
-  create_pull_request:
+  create-pr:
     runs-on: ubuntu-latest
-
+    
     steps:
-    - name: Checkout Code
+    - name: Checkout Repository
       uses: actions/checkout@v2
-
-    - name: Get Last Commit SHA
-      id: commit
-      run: echo "::set-output name=sha::$(git rev-parse HEAD)"
-
-    - name: Configure Git
-      run: |
-        git config --global user.email "actions@github.com"
-        git config --global user.name "GitHub Actions"
-
-    - name: Set up Git credentials
-      run: echo "machine github.com login ${{ secrets.GIT_USERNAME }} password ${{ secrets.GIT_TOKEN }}" > ~/.netrc
-
+      
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v3
       with:
+        token: ${{ secrets.PRIVATE_REPO_PAT }} # Access the secret here
+        branch: main
         title: 'Merge changes from public repository'
-        commit-message: 'Merge changes from public repository'
-        branch: 'feature-branch' # Use a different branch name here
-        base: 'main' # Specify the base branch where the changes should be merged
-        body: 'Automated pull request created by GitHub Actions.'
-        labels: 'auto-generated'
-        token: ${{ secrets.GIT_TOKEN_DEMO }}
-        delete-branch: true
+        body: 'Automatically generated pull request from public repository to private repository.'
+        labels: 'automated'
+        base: 'main'
+        head: 'public-repo:main'
